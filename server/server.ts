@@ -1,10 +1,10 @@
-const express = require("express");
-const session = require("express-session");
-const passport = require("passport");
-const mongoose = require("mongoose");
+import express from "express";
+import session from "express-session";
+import passport from "passport";
+import mongoose from "mongoose";
 const MongoStore = require("connect-mongo")(session);
-const cors = require("cors");
-const bodyParser = require("body-parser");
+import cors from "cors";
+import bodyParser from "body-parser";
 
 // INIT APP
 const app = express();
@@ -46,4 +46,4 @@ app.use(passport.initialize());
 const PORT = process.env.PORT || 3000;
 
 // START SERVER
-app.listen(PORT, () => console.log(PORT));
+app.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));
