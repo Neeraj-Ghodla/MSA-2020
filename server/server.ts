@@ -1,11 +1,10 @@
-import express from "express";
-import session from "express-session";
-import connectMongo from "connect-mongo";
-import bodyParser from "body-parser";
-import mongoose from "mongoose";
-import cors from "cors";
-
-const MongoStore = connectMongo(session);
+const express = require("express");
+const session = require("express-session");
+const passport = require("passport");
+const mongoose = require("mongoose");
+const MongoStore = require("connect-mongo")(session);
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
 // INIT APP
 const app = express();
@@ -16,10 +15,32 @@ mongoose.connect(require("./config/keys").MONGO_URI, {
   useUnifiedTopology: true,
 });
 const dbConnection = mongoose.connection;
-dbConnection.on("error", (err) => console.log(err));
+dbConnection.on("error", (err: Error) => console.log(err));
 dbConnection.once("open", () => console.log("DB Connected..."));
 
 // PASSPORT MIDDLEWARE
+require("./config/passport")(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+
+// APP CONFIG
+app.use(
+  cors({
+    origin: "http://localhost:3001",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
+app.use(
+  session({
+    secret: "cats",
+    resave: true,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: dbConnection }),
+  })
+);
+app.use(bodyParser.json());
+app.use(passport.initialize());
 
 // PORT
 const PORT = process.env.PORT || 3000;
