@@ -1,5 +1,4 @@
 import express, { Request, Response } from "express";
-import { ModuleResolutionKind } from "typescript";
 const router = express.Router();
 
 router.get(
