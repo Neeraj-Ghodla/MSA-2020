@@ -80,7 +80,7 @@ stages:
 # Backend
 # - stage: Deploy_Backend
 #   displayName: Deploy stage
-#   dependsOn: Build
+#   dependsOn: Build_Backend
 #   condition: succeeded()
 #   jobs:
 #   - deployment: Deploy
@@ -105,7 +105,7 @@ stages:
 # Frontend
 - stage: Deploy_Frontend
   displayName: Deploy stage
-  dependsOn: Build
+  dependsOn: Build_Frontend
   condition: succeeded()
   jobs:
   - deployment: Deploy
