@@ -79,7 +79,7 @@ stages:
       artifact: frontend
 
 # Backend
-- stage: Deploy Backend
+- stage: Deploy_Backend
   displayName: Deploy stage
   dependsOn: Build
   condition: succeeded()
@@ -104,7 +104,7 @@ stages:
               startUpCommand: 'npm run start'
 
 # Frontend
-- stage: Deploy Frontend
+- stage: Deploy_Frontend
   displayName: Deploy stage
   dependsOn: Build
   condition: succeeded()
